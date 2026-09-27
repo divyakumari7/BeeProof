@@ -1,0 +1,23 @@
+{
+  "name": "beeproof-blockchain",
+  "version": "1.0.0",
+  "description": "BeeProof Honey Provenance & Agricultural Supply-Chain Smart Contracts",
+  "main": "index.js",
+  "scripts": {
+    "compile": "hardhat compile",
+    "test": "hardhat test",
+    "node": "hardhat node",
+    "deploy:local": "hardhat run scripts/deploy.js --network localhost",
+    "deploy:polygon": "hardhat run scripts/deploy.js --network polygonAmoy"
+  },
+  "keywords": ["blockchain", "traceability", "honey", "kvic", "solidity", "hardhat"],
+  "author": "BeeProof Team",
+  "license": "MIT",
+  "devDependencies": {
+    "@nomicfoundation/hardhat-toolbox": "^5.0.0",
+    "hardhat": "^2.22.18"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.7"
+  }
+}

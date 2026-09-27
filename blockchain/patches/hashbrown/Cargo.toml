@@ -1,0 +1,4 @@
+[package]
+name = "hashbrown"
+version = "0.17.1"
+edition = "2021"

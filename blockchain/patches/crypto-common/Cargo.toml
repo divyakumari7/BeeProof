@@ -1,0 +1,4 @@
+[package]
+name = "crypto-common"
+version = "0.2.2"
+edition = "2021"

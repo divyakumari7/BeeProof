@@ -33,6 +33,7 @@ import { QrCodeDisplay } from '../components/QrCodeDisplay';
 import { BEEKEEPER_TRANSLATIONS, BeekeeperLanguage } from '../utils/beekeeperTranslations';
 import { ComputerVisionHiveHealth } from '../components/ComputerVisionHiveHealth';
 import { IotHardwareInventory } from '../components/IotHardwareInventory';
+import { BeeProofActionAdvisor } from '../components/BeeProofActionAdvisor';
 import { RegisterHiveModal } from '../components/RegisterHiveModal';
 
 export const BeekeeperPortal: React.FC = () => {
@@ -1607,6 +1608,22 @@ export const BeekeeperPortal: React.FC = () => {
           }
         }}
         lang={lang}
+      />
+
+      {/* ========================================================================= */}
+      {/* NEW: SITUATIONAL & IDLE-TIME RECOMMENDATIONS (बीप्रूफ क्रियात्मक परामर्श) */}
+      {/* ========================================================================= */}
+      <BeeProofActionAdvisor
+        lang={lang}
+        selectedHiveCode={selectedHiveCode || selectedHive?.hiveCode || 'SUN-HIVE-001'}
+        onTriggerHarvest={() => {
+          setCreatedBatch(null);
+          setFormData(prev => ({
+            ...prev,
+            hiveId: String((selectedHive as any)?._id || selectedHive?.id || selectedHive?.hiveCode || prev.hiveId)
+          }));
+          setIsHarvestModalOpen(true);
+        }}
       />
 
       {/* ========================================================================= */}

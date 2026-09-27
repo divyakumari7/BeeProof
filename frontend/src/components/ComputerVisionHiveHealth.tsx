@@ -16,79 +16,206 @@ import {
 import { api } from '../services/api';
 import { VisionDiagnosisData } from '../types';
 
-interface ConditionPreset {
+interface LocalizedConditionPreset {
   id: string;
-  name: string;
+  nameEn: string;
+  nameHi: string;
   confidence: number;
   riskLevel: 'LOW' | 'MEDIUM' | 'HIGH' | 'CRITICAL';
-  symptoms: string;
-  recommendedAction: string;
+  symptomsEn: string;
+  symptomsHi: string;
+  recommendedActionEn: string;
+  recommendedActionHi: string;
   badgeBg: string;
   badgeText: string;
 }
 
-const CONDITION_PRESETS: ConditionPreset[] = [
+const CONDITION_PRESETS: LocalizedConditionPreset[] = [
   {
     id: 'healthy',
-    name: 'Healthy Brood & Worker Bees',
+    nameEn: 'Healthy Brood & Worker Bees',
+    nameHi: 'स्वस्थ ब्रूड और कार्यकर्ता मधुमक्खियां',
     confidence: 95,
     riskLevel: 'LOW',
-    symptoms: 'Uniform capped worker brood pattern with glossy cell cappings; high worker bee density; no cell perforations or larval discoloration detected.',
-    recommendedAction: 'Continue regular hive inspections and monitor bee activity.',
+    symptomsEn: 'Uniform capped worker brood pattern with glossy cell cappings; high worker bee density; no cell perforations or larval discoloration detected.',
+    symptomsHi: 'चमकदार सेल कैपिंग के साथ एकसमान सीलबंद ब्रूड पैटर्न; कार्यकर्ता मधुमक्खियों का उच्च घनत्व; कोई छिद्र या लार्वा मलिनकिरण नहीं मिला (स्वस्थ व सुरक्षित स्थिति)।',
+    recommendedActionEn: 'Continue regular hive inspections, monitor queen oviposition pattern and nectar/pollen stores.',
+    recommendedActionHi: 'नियमित रूप से छत्ता निरीक्षण जारी रखें, रानी मक्खी के अंडे देने के पैटर्न और पराग/शहद के स्टॉक की निगरानी करें।',
     badgeBg: 'bg-emerald-100 border-emerald-300',
     badgeText: 'text-emerald-900'
   },
   {
     id: 'varroa',
-    name: 'Varroa Destructor Mites',
-    confidence: 92,
+    nameEn: 'Varroa Destructor Mites',
+    nameHi: 'वरोआ डिस्ट्रक्टर माइट्स (परजीवी कीट)',
+    confidence: 96,
     riskLevel: 'HIGH',
-    symptoms: 'Phoretic Varroa destructor mites identified adhering to thorax of emerging nurse bees; irregular chewed brood cappings and visible wing deformities.',
-    recommendedAction: 'Deploy formic acid or oxalic acid vapor treatment immediately and monitor natural mite drop count on sticky bottom boards.',
+    symptomsEn: 'Phoretic Varroa destructor mites identified adhering to thorax of emerging nurse bees; irregular chewed brood cappings and visible wing deformities.',
+    symptomsHi: 'उभरती हुई कार्यकर्ता मधुमक्खियों के वक्ष पर चिपके हुए वरोआ माइट्स; अनियमित चबाए गए ब्रूड कैपिंग और पंखों में विकृति देखी गई (उच्च जोखिम स्तर)।',
+    recommendedActionEn: 'Perform an immediate standard alcohol wash or powdered sugar roll to calculate mite infestation percentage. Apply Integrated Pest Management (IPM) treatment (formic acid or oxalic acid vapor) if above economic threshold (>= 2-3% infestation).',
+    recommendedActionHi: 'माइट संक्रमण प्रतिशत की गणना के लिए तत्काल मानक अल्कोहल वॉश या पाउडर्ड शुगर रोल परीक्षण करें। यदि आर्थिक दहलीज (>= 2-3% संक्रमण) से अधिक हो तो एकीकृत कीट प्रबंधन (IPM) उपचार (फॉर्मिक एसिड या ऑक्सालिक एसिड वाष्प) लागू करें।',
     badgeBg: 'bg-red-100 border-red-300',
     badgeText: 'text-red-900'
   },
   {
     id: 'afb',
-    name: 'American Foulbrood (AFB)',
+    nameEn: 'American Foulbrood (AFB)',
+    nameHi: 'अमेरिकन फाउलब्रूड (AFB जीवाणु रोग)',
     confidence: 96,
     riskLevel: 'CRITICAL',
-    symptoms: 'Sunken, dark, perforated brood cappings; larvae sunken to bottom of cells with characteristic ropey viscous consistency.',
-    recommendedAction: 'Immediate quarantine of colony. Notify local KVIC apiculture inspector; do not transfer comb or honey supers to prevent apiary cross-infection.',
+    symptomsEn: 'Sunken, dark, perforated brood cappings; larvae sunken to bottom of cells with characteristic ropey viscous consistency.',
+    symptomsHi: 'धंसे हुए, काले, छिद्रित ब्रूड कैपिंग; कोशिकाओं के तल में धंसे हुए लार्वा जिनकी चिपचिपी लसदार बनावट होती है (अति गंभीर जीवाणु संक्रमण)।',
+    recommendedActionEn: 'Immediate quarantine of colony. Notify local KVIC apiculture inspector; do not transfer comb or honey supers to prevent apiary cross-infection.',
+    recommendedActionHi: 'कॉलोनी का तत्काल क्वारंटीन करें। स्थानीय KVIC मधुमक्खी पालन निरीक्षक को सूचित करें; संक्रमण फैलने से रोकने के लिए फ्रेम या शहद के बक्से बिल्कुल न बदलें।',
     badgeBg: 'bg-red-100 border-red-300',
     badgeText: 'text-red-900'
   },
   {
     id: 'wax_moth',
-    name: 'Wax Moth Larva / Webbing',
+    nameEn: 'Wax Moth Larva / Webbing',
+    nameHi: 'मोम कीट लार्वा / रेशमी जाला (वैक्स मॉथ)',
     confidence: 91,
     riskLevel: 'MEDIUM',
-    symptoms: 'Silken webbing trails across comb frames; chewed beeswax foundation and dark larval frass pellets along bottom board edges.',
-    recommendedAction: 'Reduce hive entrance size, remove damaged combs, freeze affected frames at -12°C for 24 hours to eliminate moth larvae.',
+    symptomsEn: 'Silken webbing trails across comb frames; chewed beeswax foundation and dark larval frass pellets along bottom board edges.',
+    symptomsHi: 'कंघी के फ्रेमों पर रेशमी जाले के निशान; चबाए गए मोम की नींव और निचले बोर्ड के किनारों पर काले लार्वा अवशेष (मध्यम जोखिम स्तर)।',
+    recommendedActionEn: 'Reduce hive entrance size, remove damaged combs, freeze affected frames at -12°C for 24 hours to eliminate moth larvae.',
+    recommendedActionHi: 'छत्ते के प्रवेश द्वार का आकार छोटा करें, क्षतिग्रस्त कंघियों को हटाएं, और मोम कीट लार्वा खत्म करने के लिए प्रभावित फ्रेमों को -12°C पर 24 घंटे फ्रीज करें।',
     badgeBg: 'bg-orange-100 border-orange-300',
     badgeText: 'text-orange-900'
   },
   {
     id: 'chalk_brood',
-    name: 'Chalkbrood Fungal Infection',
+    nameEn: 'Chalkbrood Fungal Infection',
+    nameHi: 'चॉकब्रूड फंगल संक्रमण (फफूंद रोग)',
     confidence: 89,
     riskLevel: 'MEDIUM',
-    symptoms: 'Hard chalky white/grey mummified larvae inside perforated or uncapped brood cells; mummies dropped onto hive bottom board.',
-    recommendedAction: 'Improve hive ventilation, tilt hive slightly forward to drain moisture, and requeen if chronic mummification persists.',
+    symptomsEn: 'Hard chalky white/grey mummified larvae inside perforated or uncapped brood cells; mummies dropped onto hive bottom board.',
+    symptomsHi: 'छिद्रित या खुली ब्रूड कोशिकाओं के अंदर सफेद/भूरे सख्त ममीकृत लार्वा; छत्ते के निचले बोर्ड पर गिरी हुई चाक जैसी संरचनाएं (मध्यम फंगल जोखिम)।',
+    recommendedActionEn: 'Improve hive ventilation, tilt hive slightly forward to drain moisture, and requeen if chronic mummification persists.',
+    recommendedActionHi: 'छत्ते में हवा का आवागमन (वेंटिलेशन) बढ़ाएं, नमी निकालने के लिए छत्ते को थोड़ा आगे झुकाएं, और यदि समस्या बनी रहे तो रानी मक्खी बदलें।',
     badgeBg: 'bg-amber-100 border-amber-300',
     badgeText: 'text-amber-900'
   },
   {
     id: 'nosema',
-    name: 'Nosema Disease (Microsporidian)',
+    nameEn: 'Nosema Disease (Microsporidian)',
+    nameHi: 'नोसेमा रोग (माइक्रोस्पोरिडियन संक्रमण)',
     confidence: 90,
     riskLevel: 'HIGH',
-    symptoms: 'Dysentery and brown fecal streaking along hive entrance; sluggish crawling bees unable to fly; swollen abdomen.',
-    recommendedAction: 'Provide clean water sources, disinfect contaminated boxes with acetic acid fumes, and feed medicated syrup if infection is severe.',
+    symptomsEn: 'Dysentery and brown fecal streaking along hive entrance; sluggish crawling bees unable to fly; swollen abdomen.',
+    symptomsHi: 'छत्ते के प्रवेश द्वार पर पेचिश और भूरे रंग के धब्बे; उड़ने में असमर्थ सुस्त रेंगने वाली मधुमक्खियां; सूजा हुआ पेट (उच्च जोखिम)।',
+    recommendedActionEn: 'Provide clean water sources, disinfect contaminated boxes with acetic acid fumes, and feed medicated syrup if infection is severe.',
+    recommendedActionHi: 'स्वच्छ जल स्रोत प्रदान करें, दूषित बक्सों को एसिटिक एसिड के धुएं से कीटाणुरहित करें, और गंभीर संक्रमण होने पर औषधीय सिरप दें।',
     badgeBg: 'bg-red-100 border-red-300',
     badgeText: 'text-red-900'
   }
 ];
+
+function translateDiseaseName(name: string, lang: 'en' | 'hi'): string {
+  if (lang === 'en') return name;
+  if (!name) return '';
+  const lower = name.toLowerCase();
+  if (lower.includes('varroa') || lower.includes('mite')) return 'वरोआ डिस्ट्रक्टर माइट्स (Varroa Mites)';
+  if (lower.includes('foulbrood') || lower.includes('afb') || lower.includes('foul-brood')) return 'अमेरिकन फाउलब्रूड (AFB जीवाणु रोग)';
+  if (lower.includes('european foulbrood') || lower.includes('efb')) return 'यूरोपीय फाउलब्रूड (EFB रोग)';
+  if (lower.includes('wax moth') || lower.includes('wax-moth') || lower.includes('waxmoth')) return 'मोम कीट लार्वा / रेशमी जाला (वैक्स मॉथ)';
+  if (lower.includes('chalk') || lower.includes('chalkbrood')) return 'चॉकब्रूड फंगल संक्रमण (फफूंद रोग)';
+  if (lower.includes('nosema')) return 'नोसेमा रोग (माइक्रोस्पोरिडियन पेट संक्रमण)';
+  if (lower.includes('beetle') || lower.includes('small-hive-beetle')) return 'छोटा छत्ता भृंग (स्मॉल हाइव बीटल)';
+  if (lower.includes('pollen')) return 'पराग भंडार (Pollen Store)';
+  if (lower.includes('empty')) return 'खाली कोशिकाएं (Empty Cells)';
+  if (lower.includes('larvae') || lower.includes('larva') || lower.includes('bee-larvae')) return 'स्वस्थ मधुमक्खी लार्वा';
+  if (lower.includes('healthy') || lower.includes('worker')) return 'स्वस्थ ब्रूड और कार्यकर्ता मधुमक्खियां';
+  if (lower.includes('queen')) return 'रानी मधुमक्खी (Queen Bee)';
+  if (lower.includes('drone')) return 'ड्रोन नर मक्खी (Drone)';
+  return name;
+}
+
+function translateRiskBadge(risk: string, lang: 'en' | 'hi'): string {
+  if (lang === 'en') return `Risk: ${risk}`;
+  switch (risk?.toUpperCase()) {
+    case 'LOW': return 'जोखिम: कम (सुरक्षित)';
+    case 'MEDIUM': return 'जोखिम: मध्यम';
+    case 'HIGH': return 'जोखिम: उच्च';
+    case 'CRITICAL': return 'जोखिम: अति गंभीर';
+    default: return `जोखिम: ${risk || 'सामान्य'}`;
+  }
+}
+
+function translateSymptoms(condition: string, defaultSymptoms: string, risk: string, lang: 'en' | 'hi'): string {
+  if (lang === 'en') return defaultSymptoms || `Detected ${condition} indicator with ${risk} risk level.`;
+  const lower = (condition || '').toLowerCase();
+  if (lower.includes('varroa') || lower.includes('mite')) {
+    return 'उभरती हुई कार्यकर्ता मधुमक्खियों के वक्ष पर चिपके हुए वरोआ माइट्स; अनियमित चबाए गए ब्रूड कैपिंग और पंखों में विकृति देखी गई (उच्च जोखिम स्तर)।';
+  }
+  if (lower.includes('foulbrood') || lower.includes('afb')) {
+    return 'धंसे हुए, काले, छिद्रित ब्रूड कैपिंग; कोशिकाओं के तल में धंसे हुए लार्वा जिनकी चिपचिपी लसदार बनावट होती है (अति गंभीर जीवाणु संक्रमण)।';
+  }
+  if (lower.includes('wax') || lower.includes('moth')) {
+    return 'कंघी के फ्रेमों पर रेशमी जाले के निशान; चबाए गए मोम की नींव और निचले बोर्ड के किनारों पर काले लार्वा अवशेष (मध्यम जोखिम स्तर)।';
+  }
+  if (lower.includes('chalk') || lower.includes('chalkbrood')) {
+    return 'छिद्रित या खुली ब्रूड कोशिकाओं के अंदर सफेद/भूरे सख्त ममीकृत लार्वा; छत्ते के निचले बोर्ड पर गिरी हुई चाक जैसी संरचनाएं (मध्यम फंगल जोखिम)।';
+  }
+  if (lower.includes('nosema')) {
+    return 'छत्ते के प्रवेश द्वार पर पेचिश और भूरे रंग के धब्बे; उड़ने में असमर्थ सुस्त रेंगने वाली मधुमक्खियां; सूजा हुआ पेट (उच्च जोखिम)।';
+  }
+  if (lower.includes('healthy') || lower.includes('larvae')) {
+    return 'चमकदार सेल कैपिंग के साथ एकसमान सीलबंद ब्रूड पैटर्न; कार्यकर्ता मधुमक्खियों का उच्च घनत्व; कोई छिद्र या लार्वा मलिनकिरण नहीं मिला (स्वस्थ व सुरक्षित स्थिति)।';
+  }
+  if (lower.includes('beetle')) {
+    return 'छत्ते के कोनों और कंघी के नीचे छिपे हुए वयस्क भृंग और लार्वा; शहद में किण्वन (झाग) के संकेत।';
+  }
+  return `${translateDiseaseName(condition, 'hi')} का स्पष्ट दृश्य संकेत मिला (${translateRiskBadge(risk, 'hi')})।`;
+}
+
+function translateRecommendedAction(condition: string, defaultAction: string, lang: 'en' | 'hi'): string {
+  if (lang === 'en') return defaultAction || 'Deploy integrated pest management and adhere to hive hygiene protocols.';
+  const lower = (condition || '').toLowerCase();
+  if (lower.includes('varroa') || lower.includes('mite')) {
+    return 'माइट संक्रमण प्रतिशत की गणना के लिए तत्काल मानक अल्कोहल वॉश या पाउडर्ड शुगर रोल परीक्षण करें। यदि आर्थिक दहलीज (>= 2-3% संक्रमण) से अधिक हो तो एकीकृत कीट प्रबंधन (IPM) उपचार (फॉर्मिक एसिड या ऑक्सालिक एसिड वाष्प) तुरंत लागू करें।';
+  }
+  if (lower.includes('foulbrood') || lower.includes('afb')) {
+    return 'कॉलोनी का तत्काल क्वारंटीन करें। स्थानीय KVIC मधुमक्खी पालन निरीक्षक को सूचित करें; संक्रमण फैलने से रोकने के लिए फ्रेम या शहद के बक्से बिल्कुल न बदलें।';
+  }
+  if (lower.includes('wax') || lower.includes('moth')) {
+    return 'छत्ते के प्रवेश द्वार का आकार छोटा करें, क्षतिग्रस्त कंघियों को हटाएं, और मोम कीट लार्वा खत्म करने के लिए प्रभावित फ्रेमों को -12°C पर 24 घंटे फ्रीज करें।';
+  }
+  if (lower.includes('chalk') || lower.includes('chalkbrood')) {
+    return 'छत्ते में हवा का आवागमन (वेंटिलेशन) बढ़ाएं, नमी निकालने के लिए छत्ते को थोड़ा आगे झुकाएं, और यदि समस्या बनी रहे तो रानी मक्खी बदलें।';
+  }
+  if (lower.includes('nosema')) {
+    return 'स्वच्छ जल स्रोत प्रदान करें, दूषित बक्सों को एसिटिक एसिड के धुएं से कीटाणुरहित करें, और गंभीर संक्रमण होने पर औषधीय सिरप दें।';
+  }
+  if (lower.includes('healthy') || lower.includes('larvae')) {
+    return 'नियमित रूप से छत्ता निरीक्षण जारी रखें, रानी मक्खी के अंडे देने के पैटर्न और पराग/शहद के स्टॉक की निगरानी करें।';
+  }
+  if (lower.includes('beetle')) {
+    return 'बीटल ट्रैप्स (तेल जाल) स्थापित करें, जमीन पर चूने का छिड़काव करें और कमजोर कॉलोनियों को मजबूत करें।';
+  }
+  return `${translateDiseaseName(condition, 'hi')} के लिए अनुशंसित एकीकृत कीट प्रबंधन (IPM) और स्वच्छता प्रोटोकॉल लागू करें।`;
+}
+
+function translateUrgentAction(condition: string, defaultAction: string, lang: 'en' | 'hi'): string {
+  if (lang === 'en') return defaultAction || 'Take immediate sanitary and colony isolation precautions.';
+  const lower = (condition || '').toLowerCase();
+  if (lower.includes('varroa') || lower.includes('mite')) {
+    return 'माइट संक्रमण प्रतिशत की गणना के लिए तत्काल मानक अल्कोहल वॉश या पाउडर्ड शुगर रोल परीक्षण करें। यदि आर्थिक दहलीज (>= 2-3% संक्रमण) से अधिक हो तो एकीकृत कीट प्रबंधन (IPM) उपचार लागू करें।';
+  }
+  if (lower.includes('foulbrood') || lower.includes('afb')) {
+    return 'अति आवश्यक: प्रभावित छत्ते को तुरंत सील व अलग करें और निकटवर्ती स्वस्थ छत्तों में औजार या फ्रेम का आदान-प्रदान न करें। तुरंत विशेषज्ञ को सूचित करें।';
+  }
+  if (lower.includes('wax') || lower.includes('moth')) {
+    return 'प्रभावित फ्रेमों को तुरंत बाहर निकालें और मोम के कीटों को फैलने से रोकने के लिए ठंडे तापमान (-12°C) पर उपचारित करें।';
+  }
+  if (lower.includes('chalk') || lower.includes('chalkbrood')) {
+    return 'फफूंद संक्रमित मृत ब्रूड को नीचे के बोर्ड से तुरंत साफ करें और छत्ते की नमी कम करने के लिए हवादार वेंट लगाएं।';
+  }
+  if (lower.includes('nosema')) {
+    return 'छत्ते के प्रवेश द्वार और फ्रेमों को तुरंत विसंक्रमित करें और स्वच्छ जल व पोषण आहार प्रदान करें।';
+  }
+  return `${translateDiseaseName(condition, 'hi')} के लिए तत्काल सुरक्षात्मक कार्रवाई और आइसोलेशन प्रोटोकॉल अपनाएं।`;
+}
 
 interface Props {
   selectedHiveCode?: string;
@@ -105,7 +232,7 @@ export const ComputerVisionHiveHealth: React.FC<Props> = ({
   const [imageFileName, setImageFileName] = useState<string | null>(null);
   const [isAnalyzing, setIsAnalyzing] = useState<boolean>(false);
   const [liveResult, setLiveResult] = useState<VisionDiagnosisData | null>(null);
-  const [analysisResult, setAnalysisResult] = useState<ConditionPreset | null>(null);
+  const [analysisResult, setAnalysisResult] = useState<LocalizedConditionPreset | null>(null);
   const [showBoundingBoxes, setShowBoundingBoxes] = useState<boolean>(true);
 
   const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -125,11 +252,10 @@ export const ComputerVisionHiveHealth: React.FC<Props> = ({
   };
 
   // Manual disease selection: directly displays results WITHOUT showing any image in upload box
-  const handleSelectConditionManually = (preset: ConditionPreset) => {
+  const handleSelectConditionManually = (preset: LocalizedConditionPreset) => {
     setSelectedConditionId(preset.id);
     setAnalysisResult(preset);
     setLiveResult(null);
-    // DO NOT set uploadedImage or uploadedFile - leave upload box clean
   };
 
   const handleRunDiagnosis = async () => {
@@ -170,12 +296,19 @@ export const ComputerVisionHiveHealth: React.FC<Props> = ({
     setSelectedConditionId(null);
   };
 
-
   const currentRisk = liveResult ? liveResult.overall_hive_health_risk : analysisResult?.riskLevel || 'LOW';
-  const currentTitle = liveResult ? liveResult.primary_condition : analysisResult?.name || '';
+  const rawTitle = liveResult ? liveResult.primary_condition : (lang === 'hi' ? analysisResult?.nameHi : analysisResult?.nameEn) || '';
+  const currentTitle = translateDiseaseName(rawTitle, lang);
   const currentConfidence = liveResult ? Math.round(liveResult.confidence_score) : analysisResult?.confidence || 90;
-  const currentSymptoms = liveResult ? liveResult.primary_symptoms : analysisResult?.symptoms || '';
-  const currentAction = liveResult ? liveResult.recommended_action : analysisResult?.recommendedAction || '';
+  
+  const currentSymptoms = liveResult 
+    ? translateSymptoms(liveResult.primary_condition, liveResult.primary_symptoms, liveResult.overall_hive_health_risk, lang)
+    : (lang === 'hi' ? analysisResult?.symptomsHi : analysisResult?.symptomsEn) || '';
+    
+  const currentAction = liveResult 
+    ? translateRecommendedAction(liveResult.primary_condition, liveResult.recommended_action, lang)
+    : (lang === 'hi' ? analysisResult?.recommendedActionHi : analysisResult?.recommendedActionEn) || '';
+    
   const modelName = liveResult?.model_name || 'Ultralytics YOLOv11 Nano';
 
   return (
@@ -191,7 +324,7 @@ export const ComputerVisionHiveHealth: React.FC<Props> = ({
               {lang === 'hi' ? 'कंप्यूटर विज़न और छत्ता स्वास्थ्य' : 'Computer Vision & Hive Health'}
             </h2>
             <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold tracking-wide uppercase bg-emerald-100 text-emerald-900 border border-emerald-300">
-              YOLOv11 NEURAL VISION
+              {lang === 'hi' ? 'YOLOv11 न्यूरल विज़न' : 'YOLOv11 NEURAL VISION'}
             </span>
           </div>
           <p className="text-xs text-sand-700 mt-1">
@@ -204,7 +337,7 @@ export const ComputerVisionHiveHealth: React.FC<Props> = ({
         {/* Model Indicator Notice */}
         <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-sand-50 border border-sand-200 text-[11px] text-sand-700">
           <Info className="w-3.5 h-3.5 text-sand-500 shrink-0" />
-          <span>Ultralytics YOLOv11 • Live Comb Vision Model</span>
+          <span>{lang === 'hi' ? 'अल्ट्रालिटिक्स YOLOv11 • लाइव कंघी विज़न मॉडल' : 'Ultralytics YOLOv11 • Live Comb Vision Model'}</span>
         </div>
       </div>
 
@@ -271,7 +404,7 @@ export const ComputerVisionHiveHealth: React.FC<Props> = ({
                                 : 'bg-emerald-600 text-white border-emerald-700'
                             }`}
                           >
-                            <span>{det.display_name || det.class_name}</span>{' '}
+                            <span>{translateDiseaseName(det.display_name || det.class_name, lang)}</span>{' '}
                             <span className="opacity-90 font-mono">({Math.round(det.confidence * 100)}%)</span>
                           </div>
                         </div>
@@ -289,8 +422,8 @@ export const ComputerVisionHiveHealth: React.FC<Props> = ({
                       }`} />
                       <span>
                         {liveResult.detections && liveResult.detections.length > 0
-                          ? `${liveResult.detections.length} YOLOv11 Detections`
-                          : 'Clean Comb (0 Pathogens)'}
+                          ? `${liveResult.detections.length} ${lang === 'hi' ? 'YOLOv11 डिटेक्शन' : 'YOLOv11 Detections'}`
+                          : (lang === 'hi' ? 'स्वच्छ कंघी (0 रोगजनक)' : 'Clean Comb (0 Pathogens)')}
                       </span>
                     </div>
                   )}
@@ -302,7 +435,11 @@ export const ComputerVisionHiveHealth: React.FC<Props> = ({
                       className="ml-auto px-2.5 py-1 rounded-lg bg-black/75 hover:bg-black/90 backdrop-blur-sm text-white text-[10px] font-semibold border border-white/20 transition cursor-pointer flex items-center gap-1"
                     >
                       <Eye className="w-3 h-3 text-honey-400" />
-                      <span>{showBoundingBoxes ? 'Boundary: ON' : 'Boundary: OFF'}</span>
+                      <span>
+                        {showBoundingBoxes 
+                          ? (lang === 'hi' ? 'सीमा: चालू' : 'Boundary: ON') 
+                          : (lang === 'hi' ? 'सीमा: बंद' : 'Boundary: OFF')}
+                      </span>
                     </button>
                   )}
                 </div>
@@ -316,7 +453,7 @@ export const ComputerVisionHiveHealth: React.FC<Props> = ({
                       onClick={handleReset}
                       className="px-2.5 py-1 bg-white/20 hover:bg-white/30 backdrop-blur-sm rounded-lg text-white font-semibold transition cursor-pointer"
                     >
-                      Change Photo
+                      {lang === 'hi' ? 'फोटो बदलें' : 'Change Photo'}
                     </button>
                   </div>
                 </div>
@@ -326,8 +463,12 @@ export const ComputerVisionHiveHealth: React.FC<Props> = ({
                   <div className="absolute inset-0 bg-forest-950/70 backdrop-blur-[2px] flex flex-col items-center justify-center text-white gap-3 z-10">
                     <div className="w-12 h-12 border-3 border-honey-400 border-t-transparent rounded-full animate-spin" />
                     <div className="text-center space-y-1">
-                      <p className="font-bold text-xs tracking-wide text-honey-400">Running YOLOv11 Neural Vision Model...</p>
-                      <p className="text-[10px] text-sand-300">Extracting bounding boundaries & pathogen bio-classes</p>
+                      <p className="font-bold text-xs tracking-wide text-honey-400">
+                        {lang === 'hi' ? 'YOLOv11 न्यूरल विज़न मॉडल चल रहा है...' : 'Running YOLOv11 Neural Vision Model...'}
+                      </p>
+                      <p className="text-[10px] text-sand-300">
+                        {lang === 'hi' ? 'सीमा रेखाएं और रोगजनक बायो-क्लास निकाले जा रहे हैं...' : 'Extracting bounding boundaries & pathogen bio-classes'}
+                      </p>
                     </div>
                   </div>
                 )}
@@ -346,7 +487,9 @@ export const ComputerVisionHiveHealth: React.FC<Props> = ({
                 <p className="text-xs font-bold text-forest-950">
                   {lang === 'hi' ? 'फोटो चुनने के लिए क्लिक करें या यहाँ खींचें' : 'Click to upload or drag & drop comb image'}
                 </p>
-                <p className="text-[11px] text-sand-600 mt-1">PNG, JPG, or WEBP up to 50MB</p>
+                <p className="text-[11px] text-sand-600 mt-1">
+                  {lang === 'hi' ? 'PNG, JPG, या WEBP (अधिकतम 50MB)' : 'PNG, JPG, or WEBP up to 50MB'}
+                </p>
               </label>
             )}
           </div>
@@ -356,7 +499,9 @@ export const ComputerVisionHiveHealth: React.FC<Props> = ({
               <label className="text-xs font-bold text-forest-950 uppercase tracking-wide">
                 2. {lang === 'hi' ? 'या सीधे बीमारी चुनें (त्वरित क्लिनिकल रिपोर्ट)' : 'OR SELECT PRE-CONFIGURED TEST SAMPLE / DISEASE MANUALLY'}
               </label>
-              <span className="text-[10px] text-sand-600 italic">Direct instant report</span>
+              <span className="text-[10px] text-sand-600 italic">
+                {lang === 'hi' ? 'त्वरित क्लिनिकल रिपोर्ट' : 'Direct instant report'}
+              </span>
             </div>
 
             <div className="grid grid-cols-2 gap-2">
@@ -374,15 +519,17 @@ export const ComputerVisionHiveHealth: React.FC<Props> = ({
                     }`}
                   >
                     <div className="flex items-start justify-between gap-1">
-                      <span className="font-bold leading-tight">{preset.name}</span>
+                      <span className="font-bold leading-tight">
+                        {lang === 'hi' ? preset.nameHi : preset.nameEn}
+                      </span>
                       {isSelected && <Check className="w-3.5 h-3.5 text-honey-600 shrink-0 mt-0.5" />}
                     </div>
                     <div className="flex items-center gap-1.5 text-[10px]">
-                      <span className={`px-1.5 py-0.2 rounded font-semibold ${
+                      <span className={`px-1.5 py-0.5 rounded font-semibold ${
                         preset.riskLevel === 'LOW' ? 'text-emerald-700 bg-emerald-100' :
                         preset.riskLevel === 'MEDIUM' ? 'text-amber-700 bg-amber-100' : 'text-red-700 bg-red-100'
                       }`}>
-                        Risk: {preset.riskLevel}
+                        {translateRiskBadge(preset.riskLevel, lang)}
                       </span>
                     </div>
                   </button>
@@ -402,7 +549,7 @@ export const ComputerVisionHiveHealth: React.FC<Props> = ({
               {isAnalyzing ? (
                 <>
                   <RefreshCw className="w-4 h-4 animate-spin text-honey-400" />
-                  <span>Running YOLOv11 Vision Screening...</span>
+                  <span>{lang === 'hi' ? 'YOLOv11 विज़न स्क्रीनिंग चल रही है...' : 'Running YOLOv11 Vision Screening...'}</span>
                 </>
               ) : (
                 <>
@@ -418,7 +565,7 @@ export const ComputerVisionHiveHealth: React.FC<Props> = ({
         {/* Right Column: Realistic Diagnosis Results */}
         <div className="lg:col-span-6 space-y-4">
           <label className="block text-xs font-bold text-forest-950 uppercase tracking-wide">
-            3. {lang === 'hi' ? 'YOLO11n रोगजनक और स्वास्थ्य परिणाम' : 'YOLO11N PATHOGEN & HEALTH RESULTS'}
+            3. {lang === 'hi' ? 'YOLO11N रोगजनक और स्वास्थ्य परिणाम' : 'YOLO11N PATHOGEN & HEALTH RESULTS'}
           </label>
 
           {liveResult || analysisResult ? (
@@ -428,7 +575,7 @@ export const ComputerVisionHiveHealth: React.FC<Props> = ({
                 <div>
                   <div className="flex items-center gap-2">
                     <span className="text-[10px] uppercase tracking-wider text-sand-600 font-bold block">
-                      Detected Condition
+                      {lang === 'hi' ? 'पहचानी गई स्थिति / रोग' : 'DETECTED CONDITION'}
                     </span>
                     <span className="text-[10px] px-1.5 py-0.5 rounded bg-sand-200 font-mono text-sand-800">
                       {modelName}
@@ -450,7 +597,7 @@ export const ComputerVisionHiveHealth: React.FC<Props> = ({
                     currentRisk === 'MEDIUM' ? 'bg-amber-100 border-amber-300 text-amber-900' :
                     'bg-red-100 border-red-300 text-red-900'
                   }`}>
-                    Risk: {currentRisk}
+                    {translateRiskBadge(currentRisk, lang)}
                   </span>
                 </div>
               </div>
@@ -458,7 +605,9 @@ export const ComputerVisionHiveHealth: React.FC<Props> = ({
               {/* Confidence Meter */}
               <div className="space-y-1.5">
                 <div className="flex justify-between items-baseline text-xs">
-                  <span className="font-semibold text-sand-700">Model Confidence:</span>
+                  <span className="font-semibold text-sand-700">
+                    {lang === 'hi' ? 'मॉडल विश्वसनीयता / सटीकता:' : 'Model Confidence:'}
+                  </span>
                   <span className="font-display font-black text-sm text-forest-950 font-mono">
                     {currentConfidence}%
                   </span>
@@ -480,9 +629,11 @@ export const ComputerVisionHiveHealth: React.FC<Props> = ({
                   <div className="flex items-center justify-between text-[11px] font-bold text-forest-950 uppercase tracking-wide">
                     <span className="flex items-center gap-1.5">
                       <Layers className="w-3.5 h-3.5 text-honey-600" />
-                      <span>Detected Entities ({liveResult.detections.length})</span>
+                      <span>{lang === 'hi' ? `पहचाने गए तत्व / रोगजनक (${liveResult.detections.length})` : `DETECTED ENTITIES (${liveResult.detections.length})`}</span>
                     </span>
-                    <span className="text-[10px] text-sand-500 font-normal">YOLOv11 BBoxes</span>
+                    <span className="text-[10px] text-sand-500 font-normal">
+                      {lang === 'hi' ? 'YOLOv11 बाउंडिंग बॉक्स' : 'YOLOV11 BBOXES'}
+                    </span>
                   </div>
                   <div className="flex flex-wrap gap-1.5">
                     {liveResult.detections.slice(0, 8).map((det, idx) => (
@@ -494,7 +645,7 @@ export const ComputerVisionHiveHealth: React.FC<Props> = ({
                             : 'bg-sand-100 border-sand-200 text-sand-800'
                         }`}
                       >
-                        <span>{det.display_name}</span>
+                        <span>{translateDiseaseName(det.display_name || det.class_name, lang)}</span>
                         <span className="font-mono opacity-75">({Math.round(det.confidence * 100)}%)</span>
                       </span>
                     ))}
@@ -506,7 +657,7 @@ export const ComputerVisionHiveHealth: React.FC<Props> = ({
               <div className="p-3.5 rounded-xl bg-white border border-sand-200 space-y-1">
                 <span className="text-[11px] font-bold text-forest-950 uppercase tracking-wide flex items-center gap-1.5">
                   <Eye className="w-3.5 h-3.5 text-honey-600" />
-                  <span>Observed Symptoms</span>
+                  <span>{lang === 'hi' ? 'देखे गए लक्षण' : 'OBSERVED SYMPTOMS'}</span>
                 </span>
                 <p className="text-xs text-sand-800 leading-relaxed">
                   {currentSymptoms}
@@ -517,7 +668,7 @@ export const ComputerVisionHiveHealth: React.FC<Props> = ({
               <div className="p-4 rounded-xl bg-forest-950 text-white space-y-1.5 shadow-sm">
                 <span className="text-[11px] font-bold text-honey-400 uppercase tracking-wider flex items-center gap-1.5">
                   <CheckCircle2 className="w-3.5 h-3.5 text-honey-400" />
-                  <span>What to do / Recommended Action</span>
+                  <span>{lang === 'hi' ? 'क्या करें / अनुशंसित उपचारात्मक कार्रवाई' : 'WHAT TO DO / RECOMMENDED ACTION'}</span>
                 </span>
                 <p className="text-xs text-sand-200 leading-relaxed font-sans">
                   {currentAction}
@@ -529,18 +680,18 @@ export const ComputerVisionHiveHealth: React.FC<Props> = ({
                 <div className="p-3 rounded-xl bg-red-50 border border-red-200 space-y-1 text-red-900">
                   <span className="text-[11px] font-bold flex items-center gap-1.5 uppercase">
                     <AlertOctagon className="w-3.5 h-3.5 text-red-600" />
-                    <span>Urgent Action Required</span>
+                    <span>{lang === 'hi' ? 'तत्काल कार्रवाई आवश्यक' : 'URGENT ACTION REQUIRED'}</span>
                   </span>
                   <p className="text-xs leading-tight">
-                    {liveResult.urgent_actions[0].action}
+                    {translateUrgentAction(liveResult.primary_condition, liveResult.urgent_actions[0].action, lang)}
                   </p>
                 </div>
               )}
 
               {/* Footer Note */}
               <div className="flex items-center justify-between text-[10px] text-sand-600 pt-1 border-t border-sand-200">
-                <span>Inspected Hive: <strong className="font-mono text-forest-900">{selectedHiveCode}</strong></span>
-                <span>Diagnosis logged to cooperative telemetry</span>
+                <span>{lang === 'hi' ? 'निरीक्षित छत्ता:' : 'Inspected Hive:'} <strong className="font-mono text-forest-900">{selectedHiveCode}</strong></span>
+                <span>{lang === 'hi' ? 'निदान सहकारी टेलीमेट्री में दर्ज किया गया' : 'Diagnosis logged to cooperative telemetry'}</span>
               </div>
             </div>
           ) : (
@@ -548,9 +699,13 @@ export const ComputerVisionHiveHealth: React.FC<Props> = ({
               <div className="w-10 h-10 rounded-full bg-sand-100 flex items-center justify-center text-sand-400">
                 <Sparkles className="w-5 h-5 text-honey-600" />
               </div>
-              <p className="text-xs font-bold text-forest-950">Awaiting Image & Diagnosis Run</p>
+              <p className="text-xs font-bold text-forest-950">
+                {lang === 'hi' ? 'छवि और निदान का इंतजार है' : 'Awaiting Image & Diagnosis Run'}
+              </p>
               <p className="text-[11px] text-sand-600 max-w-xs">
-                Select an image above and click &quot;Run YOLOv11 AI Diagnosis&quot; to inspect brood comb conditions, pest infestation probability, and mitigation remedies.
+                {lang === 'hi'
+                  ? 'ब्रूड कंघी की स्थिति, कीट संक्रमण और निवारण उपायों का निरीक्षण करने के लिए ऊपर एक छवि चुनें या रोग पर क्लिक करें।'
+                  : 'Select an image above and click "Run YOLOv11 AI Diagnosis" to inspect brood comb conditions, pest infestation probability, and mitigation remedies.'}
               </p>
             </div>
           )}
@@ -559,4 +714,5 @@ export const ComputerVisionHiveHealth: React.FC<Props> = ({
     </div>
   );
 };
+
 

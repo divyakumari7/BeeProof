@@ -728,43 +728,45 @@ export const BeekeeperPortal: React.FC = () => {
       )}
 
       {/* TOP PROFILE & LANGUAGE HEADER */}
-      <div className="p-6 rounded-3xl bg-white border border-sand-200 shadow-sm flex flex-col lg:flex-row lg:items-center justify-between gap-6">
-        <div className="flex items-center gap-4">
-          <div className="w-14 h-14 rounded-2xl bg-emerald-800 text-white flex items-center justify-center font-bold shadow-sm">
+      <div className="p-6 rounded-3xl bg-white border border-sand-200 shadow-sm flex flex-col xl:flex-row xl:items-center justify-between gap-6">
+        <div className="flex items-center gap-4 min-w-0">
+          <div className="w-14 h-14 rounded-2xl bg-emerald-800 text-white flex-shrink-0 flex items-center justify-center font-bold shadow-sm">
             <Layers className="w-7 h-7 text-honey-400" />
           </div>
-          <div className="space-y-1">
+          <div className="space-y-1 min-w-0">
             <div className="flex flex-wrap items-center gap-2">
-              <h1 className="font-display text-2xl font-bold text-forest-950">
+              <h1 className="font-display text-2xl font-bold text-forest-950 truncate">
                 {dashboard?.fullName || user?.fullName}
               </h1>
-              <span className="px-2.5 py-0.5 text-xs font-semibold rounded-full bg-emerald-100 text-emerald-900 border border-emerald-300">
+              <span className="px-2.5 py-0.5 text-xs font-semibold rounded-full bg-emerald-100 text-emerald-900 border border-emerald-300 flex-shrink-0">
                 {t.registeredBeekeeper}
               </span>
             </div>
-            <p className="text-xs text-sand-700">
+            <p className="text-xs text-sand-700 truncate">
               {t.kvicRegistration}: <strong className="font-mono text-sand-900">{dashboard?.kvicRegistrationNumber || 'KVIC-WB-2026-0891'}</strong> • {t.cooperative}: <span className="font-medium text-forest-900">{dashboard?.cooperativeName || 'Sundarbans Forest Honey Cooperative'}</span>
             </p>
           </div>
         </div>
 
         {/* Right Actions: Top row (Cluster Badge + Language Selector), Bottom row (Register New Hive + Log Harvest Buttons) */}
-        <div className="flex flex-col items-start lg:items-end gap-3">
+        <div className="flex flex-col items-start sm:items-end gap-2.5 flex-shrink-0">
           {/* Row 1: Cluster Badge & Language Selector */}
-          <div className="flex flex-wrap items-center gap-3">
-            <div className="px-3.5 py-2 rounded-xl bg-sand-50 border border-sand-200 text-xs text-sand-800 flex items-center gap-1.5">
-              <MapPin className="w-3.5 h-3.5 text-honey-600" />
+          <div className="flex items-center gap-2.5 flex-nowrap">
+            <div className="px-3 py-1.5 rounded-xl bg-sand-50 border border-sand-200 text-xs text-sand-800 flex items-center gap-1.5 whitespace-nowrap">
+              <MapPin className="w-3.5 h-3.5 text-honey-600 flex-shrink-0" />
               <span>{t.assignedCluster}:</span>
-              <strong className="font-semibold text-forest-950">{dashboard?.clusterName || 'Sundarbans Cluster'}</strong>
+              <strong className="font-semibold text-forest-950 max-w-[180px] sm:max-w-[240px] truncate" title={dashboard?.clusterName || 'Sundarbans Cluster'}>
+                {dashboard?.clusterName || 'Sundarbans Cluster'}
+              </strong>
             </div>
 
             {/* Simple Language Selector: English | हिंदी */}
-            <div className="inline-flex items-center p-1 bg-sand-100 rounded-xl border border-sand-300 shadow-inner">
-              <Globe className="w-3.5 h-3.5 text-sand-600 ml-2 mr-1" />
+            <div className="inline-flex items-center p-1 bg-sand-100 rounded-xl border border-sand-300 shadow-inner flex-shrink-0">
+              <Globe className="w-3.5 h-3.5 text-sand-600 ml-2 mr-1 flex-shrink-0" />
               <button
                 type="button"
                 onClick={() => handleLanguageChange('en')}
-                className={`px-3 py-1.5 text-xs font-bold rounded-lg transition-all ${
+                className={`px-2.5 py-1 text-xs font-bold rounded-lg transition-all ${
                   lang === 'en'
                     ? 'bg-forest-900 text-white shadow-sm'
                     : 'text-sand-700 hover:text-forest-950 hover:bg-white/50'
@@ -775,7 +777,7 @@ export const BeekeeperPortal: React.FC = () => {
               <button
                 type="button"
                 onClick={() => handleLanguageChange('hi')}
-                className={`px-3 py-1.5 text-xs font-bold rounded-lg transition-all ${
+                className={`px-2.5 py-1 text-xs font-bold rounded-lg transition-all ${
                   lang === 'hi'
                     ? 'bg-forest-900 text-white shadow-sm'
                     : 'text-sand-700 hover:text-forest-950 hover:bg-white/50'
@@ -787,14 +789,14 @@ export const BeekeeperPortal: React.FC = () => {
           </div>
 
           {/* Row 2: Action Buttons */}
-          <div className="flex flex-wrap items-center gap-3">
+          <div className="flex items-center gap-2.5 flex-nowrap">
             {/* Register New Hive Button */}
             <button
               type="button"
               onClick={() => setIsRegisterHiveModalOpen(true)}
-              className="flex items-center gap-1.5 px-4 py-2.5 bg-sand-100 hover:bg-sand-200 text-forest-950 font-bold text-xs rounded-xl border border-sand-300 transition shadow-xs cursor-pointer"
+              className="flex items-center gap-1.5 px-4 py-2 bg-sand-100 hover:bg-sand-200 text-forest-950 font-bold text-xs rounded-xl border border-sand-300 transition shadow-xs cursor-pointer whitespace-nowrap"
             >
-              <Box className="w-4 h-4 text-honey-600" />
+              <Box className="w-4 h-4 text-honey-600 flex-shrink-0" />
               <span>{t.registerNewHiveBtn || '+ Register New Hive'}</span>
             </button>
 
@@ -804,9 +806,9 @@ export const BeekeeperPortal: React.FC = () => {
                 setCreatedBatch(null);
                 setIsHarvestModalOpen(true);
               }}
-              className="flex items-center gap-2 px-5 py-2.5 bg-honey-600 hover:bg-honey-700 text-white font-bold text-xs rounded-xl shadow transition"
+              className="flex items-center gap-1.5 px-4 py-2 bg-honey-600 hover:bg-honey-700 text-white font-bold text-xs rounded-xl shadow transition whitespace-nowrap"
             >
-              <PlusCircle className="w-4 h-4" />
+              <PlusCircle className="w-4 h-4 flex-shrink-0" />
               <span>{t.logHarvestBtn}</span>
             </button>
           </div>

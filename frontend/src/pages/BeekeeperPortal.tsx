@@ -748,62 +748,68 @@ export const BeekeeperPortal: React.FC = () => {
           </div>
         </div>
 
-        {/* Right Actions: Cluster Badge, Language Selector & Log Harvest Button */}
-        <div className="flex flex-wrap items-center gap-3">
-          <div className="px-3.5 py-2 rounded-xl bg-sand-50 border border-sand-200 text-xs text-sand-800 flex items-center gap-1.5">
-            <MapPin className="w-3.5 h-3.5 text-honey-600" />
-            <span>{t.assignedCluster}:</span>
-            <strong className="font-semibold text-forest-950">{dashboard?.clusterName || 'Sundarbans Cluster'}</strong>
+        {/* Right Actions: Top row (Cluster Badge + Language Selector), Bottom row (Register New Hive + Log Harvest Buttons) */}
+        <div className="flex flex-col items-start lg:items-end gap-3">
+          {/* Row 1: Cluster Badge & Language Selector */}
+          <div className="flex flex-wrap items-center gap-3">
+            <div className="px-3.5 py-2 rounded-xl bg-sand-50 border border-sand-200 text-xs text-sand-800 flex items-center gap-1.5">
+              <MapPin className="w-3.5 h-3.5 text-honey-600" />
+              <span>{t.assignedCluster}:</span>
+              <strong className="font-semibold text-forest-950">{dashboard?.clusterName || 'Sundarbans Cluster'}</strong>
+            </div>
+
+            {/* Simple Language Selector: English | हिंदी */}
+            <div className="inline-flex items-center p-1 bg-sand-100 rounded-xl border border-sand-300 shadow-inner">
+              <Globe className="w-3.5 h-3.5 text-sand-600 ml-2 mr-1" />
+              <button
+                type="button"
+                onClick={() => handleLanguageChange('en')}
+                className={`px-3 py-1.5 text-xs font-bold rounded-lg transition-all ${
+                  lang === 'en'
+                    ? 'bg-forest-900 text-white shadow-sm'
+                    : 'text-sand-700 hover:text-forest-950 hover:bg-white/50'
+                }`}
+              >
+                English
+              </button>
+              <button
+                type="button"
+                onClick={() => handleLanguageChange('hi')}
+                className={`px-3 py-1.5 text-xs font-bold rounded-lg transition-all ${
+                  lang === 'hi'
+                    ? 'bg-forest-900 text-white shadow-sm'
+                    : 'text-sand-700 hover:text-forest-950 hover:bg-white/50'
+                }`}
+              >
+                हिंदी
+              </button>
+            </div>
           </div>
 
-          {/* Simple Language Selector: English | हिंदी */}
-          <div className="inline-flex items-center p-1 bg-sand-100 rounded-xl border border-sand-300 shadow-inner">
-            <Globe className="w-3.5 h-3.5 text-sand-600 ml-2 mr-1" />
+          {/* Row 2: Action Buttons */}
+          <div className="flex flex-wrap items-center gap-3">
+            {/* Register New Hive Button */}
             <button
               type="button"
-              onClick={() => handleLanguageChange('en')}
-              className={`px-3 py-1.5 text-xs font-bold rounded-lg transition-all ${
-                lang === 'en'
-                  ? 'bg-forest-900 text-white shadow-sm'
-                  : 'text-sand-700 hover:text-forest-950 hover:bg-white/50'
-              }`}
+              onClick={() => setIsRegisterHiveModalOpen(true)}
+              className="flex items-center gap-1.5 px-4 py-2.5 bg-sand-100 hover:bg-sand-200 text-forest-950 font-bold text-xs rounded-xl border border-sand-300 transition shadow-xs cursor-pointer"
             >
-              English
+              <Box className="w-4 h-4 text-honey-600" />
+              <span>{t.registerNewHiveBtn || '+ Register New Hive'}</span>
             </button>
+
             <button
               type="button"
-              onClick={() => handleLanguageChange('hi')}
-              className={`px-3 py-1.5 text-xs font-bold rounded-lg transition-all ${
-                lang === 'hi'
-                  ? 'bg-forest-900 text-white shadow-sm'
-                  : 'text-sand-700 hover:text-forest-950 hover:bg-white/50'
-              }`}
+              onClick={() => {
+                setCreatedBatch(null);
+                setIsHarvestModalOpen(true);
+              }}
+              className="flex items-center gap-2 px-5 py-2.5 bg-honey-600 hover:bg-honey-700 text-white font-bold text-xs rounded-xl shadow transition"
             >
-              हिंदी
+              <PlusCircle className="w-4 h-4" />
+              <span>{t.logHarvestBtn}</span>
             </button>
           </div>
-
-          {/* Register New Hive Button */}
-          <button
-            type="button"
-            onClick={() => setIsRegisterHiveModalOpen(true)}
-            className="flex items-center gap-1.5 px-4 py-2.5 bg-sand-100 hover:bg-sand-200 text-forest-950 font-bold text-xs rounded-xl border border-sand-300 transition shadow-xs cursor-pointer"
-          >
-            <Box className="w-4 h-4 text-honey-600" />
-            <span>{t.registerNewHiveBtn || '+ Register New Hive'}</span>
-          </button>
-
-          <button
-            type="button"
-            onClick={() => {
-              setCreatedBatch(null);
-              setIsHarvestModalOpen(true);
-            }}
-            className="flex items-center gap-2 px-5 py-2.5 bg-honey-600 hover:bg-honey-700 text-white font-bold text-xs rounded-xl shadow transition"
-          >
-            <PlusCircle className="w-4 h-4" />
-            <span>{t.logHarvestBtn}</span>
-          </button>
         </div>
       </div>
 

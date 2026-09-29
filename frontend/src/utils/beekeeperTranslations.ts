@@ -151,6 +151,18 @@ export interface BeekeeperTranslationStrings {
   btnRecordHarvest: string;
   btnDone: string;
   submittingHarvest: string;
+
+  // Demo Video & Tutorial
+  demoVideoBtn: string;
+  demoVideoModalTitle: string;
+  demoVideoModalSubtitle: string;
+  demoVideoBadge: string;
+  demoVideoOpenNewTab: string;
+  demoVideoClose: string;
+  demoVideoTutorialGuide: string;
+  demoVideoPoint1: string;
+  demoVideoPoint2: string;
+  demoVideoPoint3: string;
 }
 
 export const BEEKEEPER_TRANSLATIONS: Record<BeekeeperLanguage, BeekeeperTranslationStrings> = {
@@ -304,7 +316,19 @@ export const BEEKEEPER_TRANSLATIONS: Record<BeekeeperLanguage, BeekeeperTranslat
     btnCancel: 'Cancel',
     btnRecordHarvest: 'Record Harvest Batch',
     btnDone: 'Done',
-    submittingHarvest: 'Recording on Blockchain...'
+    submittingHarvest: 'Recording on Blockchain...',
+
+    // Demo Video & Tutorial
+    demoVideoBtn: 'Demo Video Guide',
+    demoVideoModalTitle: 'Beekeeper Portal Tutorial & Demo Video',
+    demoVideoModalSubtitle: 'Learn how to use your smartphone in the apiary to inspect hives, check sensor telemetry, and log honey harvests.',
+    demoVideoBadge: 'VIDEO TUTORIAL',
+    demoVideoOpenNewTab: 'Open in New Tab',
+    demoVideoClose: 'Close Video',
+    demoVideoTutorialGuide: 'Quick Video Walkthrough Highlights',
+    demoVideoPoint1: 'Using smartphone app in the apiary for real-time hive data',
+    demoVideoPoint2: 'Checking temperature, humidity, weight & bee activity scores',
+    demoVideoPoint3: 'Registering new hives and generating verifiable harvest QR tokens'
   },
   hi: {
     portalTitle: 'मधुमक्खी पालक डैशबोर्ड',
@@ -456,6 +480,18 @@ export const BEEKEEPER_TRANSLATIONS: Record<BeekeeperLanguage, BeekeeperTranslat
     btnCancel: 'रद्द करें',
     btnRecordHarvest: 'बैच दर्ज करें',
     btnDone: 'पूरा हुआ',
-    submittingHarvest: 'ब्लॉकचेन पर दर्ज हो रहा है...'
+    submittingHarvest: 'ब्लॉकचेन पर दर्ज हो रहा है...',
+
+    // Demo Video & Tutorial
+    demoVideoBtn: 'डेमो वीडियो गाइड',
+    demoVideoModalTitle: 'मधुमक्खी पालक पोर्टल ट्यूटोरियल व डेमो वीडियो',
+    demoVideoModalSubtitle: 'मधुमक्खी पालन क्षेत्र में स्मार्टफोन से छत्ते की जांच, सेंसर टेलीमेट्री देखने और शहद बैच दर्ज करने का वीडियो ट्यूटोरियल।',
+    demoVideoBadge: 'वीडियो ट्यूटोरियल',
+    demoVideoOpenNewTab: 'नई टैब में खोलें',
+    demoVideoClose: 'बंद करें',
+    demoVideoTutorialGuide: 'इस ट्यूटोरियल में मुख्य बिंदु',
+    demoVideoPoint1: 'स्मार्टफोन से छत्ते के पास रीयल-टाइम डेटा देखना',
+    demoVideoPoint2: 'तापमान, आर्द्रता, वजन और मधुमक्खी गतिविधि की स्थिति जांचना',
+    demoVideoPoint3: 'नया छत्ता जोड़ना और डिजिटल सत्यापन क्यूआर टोकन बनाना'
   }
 };

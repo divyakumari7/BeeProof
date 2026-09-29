@@ -27,7 +27,10 @@ import {
   Info,
   Box,
   TrendingUp,
-  Heart
+  Heart,
+  Play,
+  Video,
+  Maximize2
 } from 'lucide-react';
 import { QrCodeDisplay } from '../components/QrCodeDisplay';
 import { BEEKEEPER_TRANSLATIONS, BeekeeperLanguage } from '../utils/beekeeperTranslations';
@@ -66,9 +69,10 @@ export const BeekeeperPortal: React.FC = () => {
   const [alertsFilter, setAlertsFilter] = useState<'ALL' | 'NEW' | 'RESOLVED'>('ALL');
   const [actionMessage, setActionMessage] = useState<string | null>(null);
 
-  // Harvest Creation Modal State
+  // Harvest & Modals State
   const [isHarvestModalOpen, setIsHarvestModalOpen] = useState(false);
   const [isRegisterHiveModalOpen, setIsRegisterHiveModalOpen] = useState(false);
+  const [isDemoVideoModalOpen, setIsDemoVideoModalOpen] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [formError, setFormError] = useState<string | null>(null);
   const [createdBatch, setCreatedBatch] = useState<BatchResponse | null>(null);
@@ -787,6 +791,19 @@ export const BeekeeperPortal: React.FC = () => {
                 हिंदी
               </button>
             </div>
+
+            {/* Demo Video Tutorial Button */}
+            <button
+              type="button"
+              onClick={() => setIsDemoVideoModalOpen(true)}
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-gradient-to-r from-amber-500 via-amber-600 to-honey-600 hover:from-amber-600 hover:to-honey-700 text-white font-bold text-xs rounded-xl shadow-xs hover:shadow-md transition-all cursor-pointer flex-shrink-0 group ring-1 ring-amber-400/40"
+              title={lang === 'hi' ? 'स्मार्टफोन पोर्टल का डेमो वीडियो ट्यूटोरियल देखें' : 'Watch Smartphone Beekeeper Demo Video Tutorial'}
+            >
+              <div className="w-4 h-4 rounded-full bg-white/25 flex items-center justify-center group-hover:scale-110 transition-transform">
+                <Play className="w-2.5 h-2.5 text-white fill-white ml-0.5" />
+              </div>
+              <span className="font-semibold whitespace-nowrap">{t.demoVideoBtn}</span>
+            </button>
           </div>
 
           {/* Row 2: Action Buttons */}
@@ -1965,6 +1982,123 @@ export const BeekeeperPortal: React.FC = () => {
         clusterCode={dashboard?.clusterCode}
         suggestedCode={`SUN-HIVE-${String((dashboard?.hives?.length || 0) + 1).padStart(3, '0')}`}
       />
+
+      {/* MODAL: DEMO / TUTORIAL VIDEO */}
+      {isDemoVideoModalOpen && (
+        <div 
+          className="fixed inset-0 z-50 bg-forest-950/80 backdrop-blur-sm flex items-center justify-center p-3 sm:p-5 overflow-y-auto"
+          onClick={() => setIsDemoVideoModalOpen(false)}
+        >
+          <div 
+            className="bg-white rounded-3xl max-w-4xl w-full p-4 sm:p-6 shadow-2xl border border-sand-200 relative my-auto"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Modal Header */}
+            <div className="flex items-start justify-between gap-3 border-b border-sand-200 pb-4 mb-4">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-2xl bg-gradient-to-tr from-amber-500 to-honey-500 flex items-center justify-center text-white shadow-sm flex-shrink-0">
+                  <Play className="w-5 h-5 fill-white ml-0.5" />
+                </div>
+                <div>
+                  <div className="flex items-center gap-2">
+                    <h2 className="text-base sm:text-lg font-bold text-forest-950">
+                      {t.demoVideoModalTitle}
+                    </h2>
+                    <span className="px-2 py-0.5 text-[10px] font-black uppercase tracking-wider bg-honey-100 text-honey-800 rounded-full border border-honey-200 flex-shrink-0">
+                      {t.demoVideoBadge}
+                    </span>
+                  </div>
+                  <p className="text-xs text-sand-600 mt-0.5">
+                    {t.demoVideoModalSubtitle}
+                  </p>
+                </div>
+              </div>
+
+              <button
+                type="button"
+                onClick={() => setIsDemoVideoModalOpen(false)}
+                className="text-sand-400 hover:text-sand-700 p-1.5 rounded-xl hover:bg-sand-100 transition flex-shrink-0 cursor-pointer"
+                title={t.demoVideoClose || 'Close'}
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            {/* Video Player Container */}
+            <div className="relative rounded-2xl overflow-hidden bg-forest-950 shadow-inner border border-sand-300 aspect-video max-h-[460px] flex items-center justify-center">
+              <video
+                controls
+                autoPlay
+                preload="auto"
+                playsInline
+                className="w-full h-full object-contain rounded-2xl"
+              >
+                <source src="/videos/Beekeeper_tutorial_20260928195728.mp4" type="video/mp4" />
+                <source src="/Beekeeper_using_smartphone_in_ap._20260928195728.mp4" type="video/mp4" />
+                {lang === 'hi' ? 'आपका ब्राउज़र वीडियो प्लेबैक का समर्थन नहीं करता है।' : 'Your browser does not support HTML5 video playback.'}
+              </video>
+            </div>
+
+            {/* Video Guide Cards & Action Buttons */}
+            <div className="mt-4 pt-3 border-t border-sand-200">
+              <h3 className="text-xs font-bold text-forest-900 mb-2 flex items-center gap-1.5">
+                <Sparkles className="w-3.5 h-3.5 text-honey-600" />
+                {t.demoVideoTutorialGuide}
+              </h3>
+              
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-2.5 mb-4">
+                <div className="p-2.5 rounded-xl bg-sand-50 border border-sand-200 flex items-start gap-2">
+                  <div className="w-5 h-5 rounded-full bg-emerald-100 text-emerald-800 text-[11px] font-bold flex items-center justify-center flex-shrink-0 mt-0.5">
+                    1
+                  </div>
+                  <p className="text-xs text-sand-800 leading-snug">
+                    {t.demoVideoPoint1}
+                  </p>
+                </div>
+
+                <div className="p-2.5 rounded-xl bg-sand-50 border border-sand-200 flex items-start gap-2">
+                  <div className="w-5 h-5 rounded-full bg-honey-100 text-honey-800 text-[11px] font-bold flex items-center justify-center flex-shrink-0 mt-0.5">
+                    2
+                  </div>
+                  <p className="text-xs text-sand-800 leading-snug">
+                    {t.demoVideoPoint2}
+                  </p>
+                </div>
+
+                <div className="p-2.5 rounded-xl bg-sand-50 border border-sand-200 flex items-start gap-2">
+                  <div className="w-5 h-5 rounded-full bg-blue-100 text-blue-800 text-[11px] font-bold flex items-center justify-center flex-shrink-0 mt-0.5">
+                    3
+                  </div>
+                  <p className="text-xs text-sand-800 leading-snug">
+                    {t.demoVideoPoint3}
+                  </p>
+                </div>
+              </div>
+
+              {/* Modal Bottom Controls */}
+              <div className="flex flex-wrap items-center justify-between gap-2.5 pt-1">
+                <a
+                  href="/videos/Beekeeper_tutorial_20260928195728.mp4"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 text-xs font-semibold text-honey-700 hover:text-honey-800 hover:underline"
+                >
+                  <ExternalLink className="w-3.5 h-3.5" />
+                  <span>{t.demoVideoOpenNewTab}</span>
+                </a>
+
+                <button
+                  type="button"
+                  onClick={() => setIsDemoVideoModalOpen(false)}
+                  className="px-5 py-2 bg-forest-900 hover:bg-forest-950 text-white font-bold text-xs rounded-xl shadow-xs transition cursor-pointer"
+                >
+                  {t.demoVideoClose}
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

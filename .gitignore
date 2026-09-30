@@ -31,12 +31,11 @@ target/
 *.tar.gz
 *.downloading
 
-# Large ML model weights (use external download / Roboflow)
-*.pt
+# Large ML model weights
 *.onnx
 *.bin
-models/cv/*.pt
-**/models/cv/*.pt
+*.pt
+!ai-service/models/cv/*.pt
 
 # Environment and secrets
 .env

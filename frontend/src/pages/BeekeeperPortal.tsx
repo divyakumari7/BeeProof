@@ -2034,7 +2034,7 @@ export const BeekeeperPortal: React.FC = () => {
                 className="w-full h-full object-contain rounded-2xl"
               >
                 <source src="/videos/Beekeeper_tutorial_20260928195728.mp4" type="video/mp4" />
-                <source src="/Beekeeper_using_smartphone_in_ap._20260928195728.mp4" type="video/mp4" />
+                <source src="/videos/Beekeeper_using_smartphone_in_ap._20260928195728.mp4" type="video/mp4" />
                 {lang === 'hi' ? 'आपका ब्राउज़र वीडियो प्लेबैक का समर्थन नहीं करता है।' : 'Your browser does not support HTML5 video playback.'}
               </video>
             </div>

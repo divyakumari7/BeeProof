@@ -1,39 +1,59 @@
 # 🐝 BeeProof — National Honey Traceability, Apiculture Governance & AI Diagnostic Platform
 
-[![Node.js](https://img.shields.io/badge/Backend-Node.js%20Express-339933?logo=nodedotjs&logoColor=white)](file:///e:/HiveLedger/NotMine/NotMine/NotMine/backend)
-[![MongoDB](https://img.shields.io/badge/Database-MongoDB%20%2F%20Mongoose-47A248?logo=mongodb&logoColor=white)](file:///e:/HiveLedger/NotMine/NotMine/NotMine/backend)
-[![React](https://img.shields.io/badge/Frontend-React%2018%20%2B%20TypeScript-61DAFB?logo=react&logoColor=black)](file:///e:/HiveLedger/NotMine/NotMine/NotMine/frontend)
-[![Vite](https://img.shields.io/badge/Bundler-Vite%206-646CFF?logo=vite&logoColor=white)](file:///e:/HiveLedger/NotMine/NotMine/NotMine/frontend)
-[![FastAPI](https://img.shields.io/badge/AI%20Microservice-FastAPI%20%2B%20Python-009688?logo=fastapi&logoColor=white)](file:///e:/HiveLedger/NotMine/NotMine/NotMine/ai-service)
-[![YOLOv11](https://img.shields.io/badge/Computer%20Vision-Ultralytics%20YOLOv11-FF6F00)](file:///e:/HiveLedger/NotMine/NotMine/NotMine/ai-service)
-[![Solana](https://img.shields.io/badge/Blockchain-Solana%20Devnet%20%2F%20EVM-9945FF?logo=solana&logoColor=white)](file:///e:/HiveLedger/NotMine/NotMine/NotMine/blockchain)
-[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](file:///e:/HiveLedger/NotMine/NotMine/NotMine/LICENSE)
+[![Node.js](https://img.shields.io/badge/Backend-Node.js%20Express-339933?logo=nodedotjs&logoColor=white)](./backend)
+[![MongoDB](https://img.shields.io/badge/Database-MongoDB%20%2F%20Mongoose-47A248?logo=mongodb&logoColor=white)](./backend)
+[![React](https://img.shields.io/badge/Frontend-React%2018%20%2B%20TypeScript-61DAFB?logo=react&logoColor=black)](./frontend)
+[![Vite](https://img.shields.io/badge/Bundler-Vite%206-646CFF?logo=vite&logoColor=white)](./frontend)
+[![FastAPI](https://img.shields.io/badge/AI%20Microservice-FastAPI%20%2B%20Python-009688?logo=fastapi&logoColor=white)](./ai-service)
+[![YOLOv11](https://img.shields.io/badge/Computer%20Vision-Ultralytics%20YOLOv11-FF6F00)](./ai-service)
+[![Solana](https://img.shields.io/badge/Blockchain-Solana%20Devnet%20%2F%20EVM-9945FF?logo=solana&logoColor=white)](./blockchain)
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](./LICENSE)
 
-**BeeProof** (HiveLedger) is a comprehensive, enterprise-grade national apiculture governance and honey traceability platform. Built to support the **Khadi and Village Industries Commission (KVIC)** and registered beekeeping cooperatives across India, BeeProof eliminates honey adulteration (such as high-fructose corn syrup and C4 sugar manipulation), secures farm-to-jar provenance using dual-layer blockchain verification, provides biological IoT smart-hive telemetry, and delivers edge AI/Computer Vision diagnostics to empower beekeepers.
+**BeeProof** (HiveLedger) is a comprehensive, enterprise-grade national apiculture governance and honey traceability platform built for the **Smart India Hackathon (SIH)**. Developed in alignment with the **Khadi and Village Industries Commission (KVIC)** and the **National Beekeeping & Honey Mission (NBHM)**, BeeProof eliminates commercial honey adulteration (such as high-fructose corn syrup, inverted rice syrup, and C4 sugar manipulation), secures farm-to-jar provenance using dual-layer blockchain verification, provides biological IoT smart-hive telemetry, and delivers edge AI/Computer Vision diagnostics to empower beekeepers.
 
 ---
 
 ## 📑 Table of Contents
 
-- [1. Key Innovations & Platform Features](#1-key-innovations--platform-features)
-- [2. System Architecture & Monorepo Structure](#2-system-architecture--monorepo-structure)
-- [3. Complete Persona Portals & User Roles](#3-complete-persona-portals--user-roles)
-- [4. AI & Computer Vision Pathology Engine](#4-ai--computer-vision-pathology-engine)
-- [5. Deterministic 7-Field Cryptographic Integrity Engine](#5-deterministic-7-field-cryptographic-integrity-engine)
-- [6. Technology Stack Across All Tiers](#6-technology-stack-across-all-tiers)
-- [7. Default Test Credentials](#7-default-test-credentials)
-- [8. Local Development Quickstart](#8-local-development-quickstart)
-- [9. REST API Endpoint Reference](#9-rest-api-endpoint-reference)
-- [10. Automated Testing & Verification](#10-automated-testing--verification)
-- [11. License & Governance](#11-license--governance)
+- [1. Visual UI Gallery & Screenshots](#1-visual-ui-gallery--screenshots)
+- [2. Key Innovations & Platform Features](#2-key-innovations--platform-features)
+- [3. System Architecture & Monorepo Structure](#3-system-architecture--monorepo-structure)
+- [4. Complete Persona Portals & User Roles](#4-complete-persona-portals--user-roles)
+- [5. AI & Computer Vision Pathology Engine](#5-ai--computer-vision-pathology-engine)
+- [6. Deterministic 7-Field Cryptographic Integrity Engine](#6-deterministic-7-field-cryptographic-integrity-engine)
+- [7. Technology Stack Across All Tiers](#7-technology-stack-across-all-tiers)
+- [8. Default Test Credentials](#8-default-test-credentials)
+- [9. Local Development Quickstart](#9-local-development-quickstart)
+- [10. REST API Endpoint Reference](#10-rest-api-endpoint-reference)
+- [11. Testing & Verification](#11-testing--verification)
+- [12. License & Governance](#12-license--governance)
 
 ---
 
-## 1. Key Innovations & Platform Features
+## 1. Visual UI Gallery & Screenshots
+
+> [!TIP]
+> The BeeProof web platform features 9 distinct portals, real-time IoT gauges, interactive SVG India geo-mapping, and live on-chain cryptographic tamper simulation.
+
+### 🌐 Persona Portals & Features Overview
+
+| Feature / Screen | Description |
+| :--- | :--- |
+| **🔍 Consumer Verification Portal** | Public verification showing full 6-stage provenance timeline, NABL chemical lab parameters, GPS origin map, PDF certificate generator, and cryptographic blockchain proof. |
+| **🏛️ KVIC National Admin Command Center** | National apiculture overview with interactive SVG India map, regional honey clusters (Sundarbans, Nilgiri, Kashmir), floral analytics, and live database tamper simulation sandbox. |
+| **👁️ YOLOv11 Computer Vision Studio** | Deep learning comb inspection detecting *Varroa* mites, American/European Foulbrood, Chalkbrood, Wax Moth webbing, and Queen bees with instant IPM remedies. |
+| **🐝 Multilingual Beekeeper Dashboard** | 9-language UI with biological IoT telemetry (temperature, humidity, acoustics, weight), harvest batch logger, and AI Action Advisor. |
+| **🧪 Accredited NABL Quality Lab** | Standardized testing interface for moisture %, HMF, C4 sugar isotope analysis, and NMR spectroscopy with cryptographic hash minting. |
+
+*(Screenshots can be stored and linked directly from `docs/screenshots/`)*
+
+---
+
+## 2. Key Innovations & Platform Features
 
 ### 🍯 1. End-to-End Honey Supply Chain Traceability
 - **6-Stage Verified Custody Pipeline**: `HARVESTED` → `COLLECTED` → `PROCESSING` → `QUALITY_VERIFIED` → `PACKAGED` → `DISPATCHED` → `DELIVERED`.
-- **Strict Transition Gates**: Packaging is blocked until NABL laboratory quality clearance; retail handover requires confirmed logistics dispatch.
+- **Strict Transition Gates**: Packaging is cryptographically blocked until NABL laboratory quality clearance; retail handover requires confirmed logistics dispatch.
 - **Dynamic QR Code Serialization**: Unique QR labels generated for bulk collection tins down to individual 500g serialized consumer jars.
 
 ### 🔒 2. Dual Blockchain Ledger & Anti-Fraud Protection
@@ -42,7 +62,8 @@
 - **Live Database Tampering & Fraud Detection Simulator**: Interactive sandbox demonstrating instantaneous on-chain tamper detection if raw database records are altered.
 
 ### 👁️ 3. Computer Vision Hive & Comb Pathology Studio
-- **Ultralytics YOLOv11 & Deep Learning Vision Pipeline**: Upload or capture comb photos and videos to detect colony health conditions.
+- **Ultralytics YOLOv11 Deep Learning Vision Pipeline**: Upload or capture comb photos to detect colony health conditions.
+- **Self-Contained Model**: Pre-bundled trained weights (`ai-service/models/cv/beehive_disease_yolo11n_best.pt`, 5.4 MB) for zero-configuration startup.
 - **Automated Pathogen & Health Detection**:
   - *Varroa Destructor* parasite mites adhering to nurse bees.
   - American Foulbrood (AFB) & European Foulbrood (EFB) bacterial brood rots.
@@ -79,10 +100,11 @@
 
 ---
 
-## 2. System Architecture & Monorepo Structure
+## 3. System Architecture & Monorepo Structure
 
 ```
-BeeProof/
+HiveLedger/ (BeeProof Platform)
+│
 ├── frontend/                  # React 18 + TypeScript + Vite 6 + Tailwind CSS Web Application
 │   ├── src/
 │   │   ├── components/        # BeeProofActionAdvisor, ComputerVisionHiveHealth, DbTamperSimulation,
@@ -96,6 +118,9 @@ BeeProof/
 │   │   ├── services/          # api.ts (Axios / Fetch REST client with Bearer token injection)
 │   │   ├── types/             # Strongly typed TypeScript interfaces matching backend models
 │   │   └── utils/             # beekeeperTranslations.ts (Multi-language localization dictionaries)
+│   ├── public/
+│   │   ├── assets/            # High-resolution branding graphics
+│   │   └── videos/            # Beekeeper tutorial and inspection demonstration videos
 │   ├── index.html             # Single Page Application root
 │   ├── package.json           # Frontend dependencies (React 18, Vite 6, Tailwind, Lucide)
 │   └── vite.config.ts         # Vite build and proxy configuration
@@ -119,31 +144,38 @@ BeeProof/
 │   └── Dockerfile             # Multi-stage production Node.js container
 │
 ├── ai-service/                # Python 3.10+ FastAPI Machine Learning & Computer Vision Microservice
+│   ├── models/cv/             # beehive_disease_yolo11n_best.pt (Trained YOLOv11 weights, 5.4 MB)
 │   ├── main.py                # FastAPI endpoints (/predict/hive-health, /predict/productivity,
 │   │                          # /predict/disease-risk, /predict/vision-health, /predict/vision-health-base64)
 │   ├── ml_engine.py           # Scikit-Learn colony health classifier, yield regressor & YOLOv11 CV engine
 │   ├── models.py              # Pydantic validation schemas
-│   ├── risk_engine.py         # Pathogen & pest inference models
+│   ├── risk_engine.py         # Pathogen & pest inference models with IPM prescriptions
 │   ├── test_ai_service.py     # Pytest unit & regression test suite
 │   ├── requirements.txt       # fastapi, uvicorn, scikit-learn, ultralytics, pandas, numpy, pillow
 │   └── Dockerfile             # Python 3.11 slim container
 │
-├── blockchain/                # Blockchain Contracts & Environments
+├── blockchain/                # Blockchain Smart Contracts & Environments
 │   ├── contracts/             # HoneyBatchTraceability.sol (Solidity EVM smart contract)
 │   ├── programs/              # Solana Anchor Rust smart contracts
 │   ├── scripts/               # deploy.js
 │   ├── hardhat.config.js      # Hardhat EVM local node configuration
 │   └── package.json           # Hardhat, ethers.js, Anchor dependencies
 │
+├── iot/                       # Biological Smart Hive IoT Sensor Simulation & LoRaWAN Schemas
+├── docs/                      # Technical Documentation & Presentation Materials
+│   ├── architecture.md        # Comprehensive multi-tier architecture design document
+│   └── HACKATHON_DEMO_SCRIPT.md # Step-by-step judge presentation & demo script
+│
 ├── run-website.bat            # One-Click Windows launcher (AI Service + Backend + Frontend)
 ├── docker-compose.yml         # Containerized multi-service orchestration
-├── test-complete-regression.ps1# Master End-to-End PowerShell regression test suite
+├── .env.example               # Environment variables template
+├── .gitignore                 # Monorepo git exclusion rules
 └── README.md                  # Comprehensive platform documentation manual
 ```
 
 ---
 
-## 3. Complete Persona Portals & User Roles
+## 4. Complete Persona Portals & User Roles
 
 | Portal | Route | Primary User Role | Key Functionalities |
 | :--- | :--- | :--- | :--- |
@@ -158,9 +190,9 @@ BeeProof/
 
 ---
 
-## 4. AI & Computer Vision Pathology Engine
+## 5. AI & Computer Vision Pathology Engine
 
-The BeeProof AI service ([`ai-service/`](file:///e:/HiveLedger/NotMine/NotMine/NotMine/ai-service)) operates as an independent FastAPI microservice on port `8000`:
+The BeeProof AI service ([`ai-service/`](./ai-service)) operates as an independent FastAPI microservice on port `8000`:
 
 ```
                                   ┌───────────────────────────────┐
@@ -189,7 +221,7 @@ The BeeProof AI service ([`ai-service/`](file:///e:/HiveLedger/NotMine/NotMine/N
 
 ---
 
-## 5. Deterministic 7-Field Cryptographic Integrity Engine
+## 6. Deterministic 7-Field Cryptographic Integrity Engine
 
 To ensure unalterable integrity between the physical harvest, chemical testing, and blockchain ledgers, BeeProof generates a canonical SHA-256 state Merkle root derived from **7 critical data points**:
 
@@ -214,7 +246,7 @@ Resulting SHA-256 Merkle Root:
 
 ---
 
-## 6. Technology Stack Across All Tiers
+## 7. Technology Stack Across All Tiers
 
 | Tier | Technologies | Description |
 | :--- | :--- | :--- |
@@ -229,7 +261,7 @@ Resulting SHA-256 Merkle Root:
 
 ---
 
-## 7. Default Test Credentials
+## 8. Default Test Credentials
 
 The database is pre-seeded with 6 personas covering every role in the apiculture supply chain:
 
@@ -245,17 +277,17 @@ The database is pre-seeded with 6 personas covering every role in the apiculture
 
 ---
 
-## 8. Local Development Quickstart
+## 9. Local Development Quickstart
 
 ### Prerequisites
 - **Node.js**: v18.0.0 or higher
 - **Python**: v3.10 or higher (with `pip`)
-- **MongoDB** *(Optional)*: Local MongoDB on `mongodb://127.0.0.1:27017/beeproof` (An embedded memory server will launch automatically if local MongoDB is not running).
+- **MongoDB** *(Optional)*: Local MongoDB on `mongodb://127.0.0.1:27017/beeproof` (An embedded in-memory database will launch automatically if local MongoDB is not running).
 
 ---
 
 ### 🚀 Option A: One-Click Startup (Windows)
-Run the root batch launcher to boot all 3 tiers simultaneously and open your browser:
+Run the root batch launcher to boot all 3 tiers simultaneously and automatically open your browser:
 ```powershell
 .\run-website.bat
 ```
@@ -281,7 +313,7 @@ npm run dev
 ```
 - Backend REST API Base: `http://localhost:8080/api`
 - Backend Health Check: `http://localhost:8080/api/health`
-- Seed Database (Manual trigger if required): `npm run seed`
+- Seed Database (Manual trigger if needed): `npm run seed`
 
 #### Step 3: Start React Frontend Application (Port 5173)
 ```powershell
@@ -293,7 +325,7 @@ npm run dev
 
 ---
 
-## 9. REST API Endpoint Reference
+## 10. REST API Endpoint Reference
 
 ### 🔐 Authentication (`/api/auth`)
 - `POST /api/auth/login` — Authenticate persona credentials & receive JWT token.
@@ -354,27 +386,26 @@ npm run dev
 
 ---
 
-## 10. Automated Testing & Verification
+## 11. Testing & Verification
 
-BeeProof includes complete end-to-end regression suites to validate all features:
+BeeProof includes complete automated testing and verification across all tiers:
 
-### Run Master Regression Suite (PowerShell)
-```powershell
-powershell.exe -ExecutionPolicy Bypass -File .\test-complete-regression.ps1
-```
-
-### Individual Verification Scripts:
-- `.\test-phase2.ps1` — Phase 2 Traceability MVP & Smart Contract Minting.
-- `.\test-phase3.ps1` — Phase 3 Supply Chain Workflows & State Machine Transitions.
-- `.\test-phase4.ps1` — Phase 4 IoT Telemetry & Biological Anomaly Detection.
-- `.\test-phase5.ps1` — Phase 5 AI Colony Health & Yield Inferences.
-- `.\test-phase6.ps1` — Phase 6 KVIC National BI Analytics & Cluster Drilldown.
-- `cd backend && npm test` — Backend Node.js controller & API unit tests.
-- `cd ai-service && pytest` — AI & Computer Vision Pytest test suite.
+- **AI Service Unit Tests**:
+  ```powershell
+  cd ai-service
+  pytest
+  ```
+- **Backend API Unit & Integration Tests**:
+  ```powershell
+  cd backend
+  npm test
+  ```
+- **Live Anti-Fraud / Cryptographic Tamper Simulator**:
+  Available interactively directly on the UI (`/admin` and `/verify/:batchNumber`) to test on-demand hash discrepancies against blockchain state.
 
 ---
 
-## 11. License & Governance
+## 12. License & Governance
 
 Developed under the **Apache 2.0 License** for the **National Apiculture Mission & Honey Traceability Governance**, in collaboration with the **Khadi and Village Industries Commission (KVIC)**.
 

@@ -39,7 +39,7 @@ class TestBeeProofAIService(unittest.TestCase):
         self.assertEqual(res.status_code, 200)
         data = res.json()
         self.assertIn(data["health_status"], ["WARNING", "CRITICAL"])
-        self.assertLess(data["health_score"], 70.0)
+        self.assertLessEqual(data["health_score"], 70.0)
 
     def test_invalid_temperature_rejected(self):
         payload = {

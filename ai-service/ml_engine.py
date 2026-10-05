@@ -247,6 +247,19 @@ class MLEngine:
         )
 
     def predict_productivity(self, req: ProductivityRequest) -> ProductivityResponse:
+        if req.historical_points_count is not None and req.historical_points_count < 3 and (req.historical_yield_kg is None or req.historical_yield_kg <= 0):
+            return ProductivityResponse(
+                hive_id=req.hive_id,
+                status="INSUFFICIENT_DATA",
+                predicted_production_kg=0.0,
+                expected_range_min_kg=0.0,
+                expected_range_max_kg=0.0,
+                confidence_score=0.0,
+                confidence_indicator="LOW",
+                contributing_factors=["Fewer than 3 historical datapoints recorded."],
+                message="Insufficient historical data to forecast honey yield."
+            )
+
         weight = req.current_weight
         hist_yield = req.historical_yield_kg
         temp = req.temperature or 34.5
@@ -332,6 +345,16 @@ class MLEngine:
             )
 
     def analyze_anomalies(self, req: AnomalyAnalysisRequest) -> AnomalyAnalysisResponse:
+        if not req.history or len(req.history) < 2:
+            return AnomalyAnalysisResponse(
+                hive_id=req.hive_id,
+                status="INSUFFICIENT_HISTORY",
+                anomalies_detected=0,
+                detected_patterns=[],
+                contributing_factors=["Minimum of 2 historical telemetry readings required for delta analysis."],
+                message="Insufficient history for anomaly detection."
+            )
+
         return AnomalyAnalysisResponse(
             hive_id=req.hive_id,
             status="SUCCESS",

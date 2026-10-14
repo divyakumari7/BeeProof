@@ -38,6 +38,7 @@ import { ComputerVisionHiveHealth } from '../components/ComputerVisionHiveHealth
 import { IotHardwareInventory } from '../components/IotHardwareInventory';
 import { BeeProofActionAdvisor } from '../components/BeeProofActionAdvisor';
 import { RegisterHiveModal } from '../components/RegisterHiveModal';
+import { MandiPriceIntelligence } from '../components/MandiPriceIntelligence';
 
 export const BeekeeperPortal: React.FC = () => {
   const { user } = useAuth();
@@ -1640,6 +1641,22 @@ export const BeekeeperPortal: React.FC = () => {
             hiveId: String((selectedHive as any)?._id || selectedHive?.id || selectedHive?.hiveCode || prev.hiveId)
           }));
           setIsHarvestModalOpen(true);
+        }}
+      />
+
+      {/* ========================================================================= */}
+      {/* 4.5. 🐟 TINYFISH WEB AGENT: REAL-TIME APMC MANDI PRICE INTELLIGENCE */}
+      {/* ========================================================================= */}
+      <MandiPriceIntelligence
+        lang={lang}
+        defaultState="West Bengal"
+        onHarvestPriceReference={(recommendedPrice) => {
+          setActionMessage(
+            lang === 'hi'
+              ? `मंडी मॉडल भाव ₹${recommendedPrice}/किलो संदर्भ के रूप में चयनित!`
+              : `APMC Mandi modal benchmark ₹${recommendedPrice}/kg selected for harvest calculation!`
+          );
+          setTimeout(() => setActionMessage(null), 4000);
         }}
       />
 

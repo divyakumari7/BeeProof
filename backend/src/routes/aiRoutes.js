@@ -17,7 +17,10 @@ router.post('/cv/diagnose', upload.any(), (req, res, next) => aiController.diagn
 router.post('/vision/diagnose', upload.any(), (req, res, next) => aiController.diagnoseCombImage(req, res, next));
 router.post('/predict/vision-health', upload.any(), (req, res, next) => aiController.diagnoseCombImage(req, res, next));
 router.post('/hives/:hiveId/vision-diagnose', upload.any(), (req, res, next) => aiController.diagnoseCombImage(req, res, next));
-router.post('/hives/:hiveId/cv/predict', upload.any(), (req, res, next) => aiController.diagnoseCombImage(req, res, next));
+// 🐟 TinyFish Web Agent: Real-Time APMC Mandi Honey Price Intelligence
+router.get('/mandi-prices', (req, res, next) => aiController.getMandiPrices(req, res, next));
+router.post('/mandi-prices/refresh', (req, res, next) => aiController.refreshMandiPrices(req, res, next));
+router.post('/mandi-prices/calculate-revenue', (req, res, next) => aiController.calculateMandiRevenue(req, res, next));
 
 module.exports = router;
 

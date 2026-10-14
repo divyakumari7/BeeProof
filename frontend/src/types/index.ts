@@ -479,3 +479,61 @@ export interface VisionDiagnosisData {
   disclaimer: string;
 }
 
+// 🐟 TinyFish Web Agent: Real-Time APMC Mandi Honey Price Intelligence Types
+export interface MandiItem {
+  market: string;
+  variety: string;
+  minPricePerKg: number;
+  maxPricePerKg: number;
+  modalPricePerKg: number;
+  arrivalVolumeQuintals?: number;
+  arrivalDate: string;
+  trend?: 'UP' | 'DOWN' | 'STABLE';
+  status?: string;
+}
+
+export interface MandiSummary {
+  avgModalPricePerKg: number;
+  minMandiPricePerKg: number;
+  maxMandiPricePerKg: number;
+  typicalMiddlemanOfferPerKg: number;
+  exploitationGapPerKg: number;
+  profitUpliftPercent: number;
+  activeReportingMandis: number;
+  fairPriceFloor: number;
+}
+
+export interface MandiAdvisory {
+  headline: string;
+  analysis: string;
+  recommendation: string;
+}
+
+export interface MandiPriceResponse {
+  provider: string;
+  executionMode: string;
+  state: string;
+  regionalCluster: string;
+  primaryFlora: string;
+  sourceUrl: string;
+  queriedAt: string;
+  latencyMs: number;
+  summary: MandiSummary;
+  advisory: MandiAdvisory;
+  mandis: MandiItem[];
+  availableStates: string[];
+  cached?: boolean;
+}
+
+export interface RevenueComparisonResponse {
+  state: string;
+  quantityKg: number;
+  middlemanRatePerKg: number;
+  apmcModalRatePerKg: number;
+  middlemanTotalPayout: number;
+  apmcMandiTotalPayout: number;
+  netLossPrevented: number;
+  percentageGain: number;
+  verdict: string;
+}
+

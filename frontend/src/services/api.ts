@@ -396,6 +396,27 @@ class ApiService {
     });
     return res.text();
   }
+
+  // 🐟 TinyFish Web Agent: Real-Time APMC Mandi Honey Price Intelligence
+  async getMandiPrices(state = 'West Bengal', refresh = false) {
+    return this.request<import('../types').MandiPriceResponse>(
+      `/ai/mandi-prices?state=${encodeURIComponent(state)}${refresh ? '&refresh=true' : ''}`
+    );
+  }
+
+  async refreshMandiPrices(state = 'West Bengal') {
+    return this.request<import('../types').MandiPriceResponse>('/ai/mandi-prices/refresh', {
+      method: 'POST',
+      body: JSON.stringify({ state }),
+    });
+  }
+
+  async calculateMandiRevenue(data: { state?: string; beekeeperOfferPrice?: number; quantityKg?: number }) {
+    return this.request<import('../types').RevenueComparisonResponse>('/ai/mandi-prices/calculate-revenue', {
+      method: 'POST',
+      body: JSON.stringify(data),
+    });
+  }
 }
 
 export const api = new ApiService();

@@ -1,4 +1,5 @@
 const aiServiceClient = require('../services/aiServiceClient');
+const tinyfishService = require('../services/tinyfishService');
 const iotService = require('../services/iotService');
 const HoneyBatch = require('../models/HoneyBatch');
 const HiveAlert = require('../models/HiveAlert');
@@ -108,6 +109,63 @@ class AiController {
       return res.json({
         success: true,
         data: result
+      });
+    } catch (err) {
+      next(err);
+    }
+  }
+
+  // --- 🐟 TinyFish Web Agent APMC Mandi Price Intelligence ---
+  async getMandiPrices(req, res, next) {
+    try {
+      const state = req.query.state || req.body?.state || 'West Bengal';
+      const forceRefresh = req.query.refresh === 'true' || req.body?.refresh === true;
+
+      const data = await tinyfishService.getLiveMandiPrices({
+        state,
+        forceRefresh
+      });
+
+      return res.json({
+        success: true,
+        data
+      });
+    } catch (err) {
+      next(err);
+    }
+  }
+
+  async refreshMandiPrices(req, res, next) {
+    try {
+      const state = req.body?.state || req.query.state || 'West Bengal';
+
+      const data = await tinyfishService.getLiveMandiPrices({
+        state,
+        forceRefresh: true
+      });
+
+      return res.json({
+        success: true,
+        data
+      });
+    } catch (err) {
+      next(err);
+    }
+  }
+
+  async calculateMandiRevenue(req, res, next) {
+    try {
+      const { state = 'West Bengal', beekeeperOfferPrice, quantityKg } = req.body || {};
+
+      const data = tinyfishService.calculateRevenueComparison({
+        state,
+        beekeeperOfferPrice,
+        quantityKg
+      });
+
+      return res.json({
+        success: true,
+        data
       });
     } catch (err) {
       next(err);
